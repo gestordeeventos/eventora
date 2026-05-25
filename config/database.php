@@ -11,6 +11,11 @@ if ($supabaseUrl && preg_match('#https://([a-z0-9]+)\.supabase\.co#', $supabaseU
 }
 
 $supabaseDbPassword = env('SUPABASE_DB_PASSWORD', '');
+$supabasePoolerHost = env('SUPABASE_POOLER_HOST');
+$supabaseDbHost = env('DB_HOST')
+    ?? ($supabasePoolerHost ?: ($supabaseProjectRef ? "db.{$supabaseProjectRef}.supabase.co" : '127.0.0.1'));
+$supabaseDbUser = env('DB_USERNAME')
+    ?? ($supabasePoolerHost && $supabaseProjectRef ? "postgres.{$supabaseProjectRef}" : 'postgres');
 
 return [
 
@@ -96,10 +101,10 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', $supabaseProjectRef ? "db.{$supabaseProjectRef}.supabase.co" : '127.0.0.1'),
+            'host' => $supabaseDbHost,
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'postgres'),
-            'username' => env('DB_USERNAME', 'postgres'),
+            'username' => $supabaseDbUser,
             'password' => env('DB_PASSWORD', $supabaseDbPassword),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',

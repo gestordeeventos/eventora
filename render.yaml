@@ -42,6 +42,12 @@ services:
         sync: false
       - key: SUPABASE_DB_PASSWORD
         sync: false
+      - key: SUPABASE_POOLER_HOST
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_URL
+        sync: false
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST

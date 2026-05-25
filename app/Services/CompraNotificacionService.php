@@ -18,14 +18,23 @@ class CompraNotificacionService
             return;
         }
 
-        try {
-            Mail::to($email)->send(new CompraConfirmadaMail($reserva));
-        } catch (\Throwable $e) {
-            Log::warning('No se pudo enviar el correo de confirmación de compra.', [
-                'id_reserva' => $reserva->id_reserva,
-                'email' => $email,
-                'error' => $e->getMessage(),
-            ]);
-        }
+        $reservaId = $reserva->id_reserva;
+
+        dispatch(function () use ($reservaId, $email) {
+            $reserva = Reserva::with(['evento', 'usuario'])->find($reservaId);
+            if (! $reserva) {
+                return;
+            }
+
+            try {
+                Mail::to($email)->send(new CompraConfirmadaMail($reserva));
+            } catch (\Throwable $e) {
+                Log::warning('No se pudo enviar el correo de confirmación de compra (SMTP suele estar bloqueado en Render).', [
+                    'id_reserva' => $reservaId,
+                    'email' => $email,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        })->afterResponse();
     }
 }

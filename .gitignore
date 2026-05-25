@@ -21,6 +21,7 @@
 /storage/*.key
 /storage/pail
 /storage/logs/*.log
+/composer.phar
 /vendor
 _ide_helper.php
 Homestead.json

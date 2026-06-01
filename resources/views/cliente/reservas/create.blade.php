@@ -24,7 +24,8 @@
                     </div>
                 @endif
             @endforeach
-            <button type="submit" class="btn-comprar-gold mt-4">Confirmar compra</button>
+            <button type="submit" class="btn-comprar-gold mt-4">Agregar al carrito</button>
+            <p class="small text-muted mt-2 mb-0">Podrás revisar varios eventos y pagar todo en un solo paso.</p>
         </form>
     </div>
 </div>

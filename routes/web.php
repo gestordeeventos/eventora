@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EventoController as AdminEventoController;
 use App\Http\Controllers\Admin\UsuarioController as AdminUsuarioController;
+use App\Http\Controllers\Cliente\CarritoController as ClienteCarritoController;
 use App\Http\Controllers\Cliente\CompraController as ClienteCompraController;
 use App\Http\Controllers\Cliente\PagoController as ClientePagoController;
 use App\Http\Controllers\Cliente\PerfilController as ClientePerfilController;
@@ -41,12 +42,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/catalogo', [EventoController::class, 'index'])->name('cliente.eventos.index');
 
         Route::get('/reservas', fn () => redirect()->route('cliente.compras.index'))->name('reservas.index');
+        Route::get('/carrito', [ClienteCarritoController::class, 'index'])->name('cliente.carrito.index');
+        Route::post('/carrito/vaciar', [ClienteCarritoController::class, 'vaciar'])->name('cliente.carrito.vaciar');
+        Route::post('/carrito/checkout', [ClienteCarritoController::class, 'checkout'])->name('cliente.carrito.checkout');
+        Route::patch('/carrito/item/{item}', [ClienteCarritoController::class, 'actualizar'])->name('cliente.carrito.item.update');
+        Route::delete('/carrito/item/{item}', [ClienteCarritoController::class, 'eliminar'])->name('cliente.carrito.item.destroy');
+
         Route::get('/eventos/{evento}/reservar', [ReservaController::class, 'create'])->name('reservas.create');
-        Route::post('/eventos/{evento}/reservar', [ReservaController::class, 'store'])->name('reservas.store');
+        Route::post('/eventos/{evento}/reservar', [ClienteCarritoController::class, 'agregar'])->name('reservas.store');
 
         Route::get('/pago/{reserva}', [ClientePagoController::class, 'show'])->name('cliente.pago.show');
         Route::post('/pago/{reserva}', [ClientePagoController::class, 'procesar'])->name('cliente.pago.procesar');
+        Route::get('/pago/carrito/{carrito}', [ClientePagoController::class, 'showCarrito'])->name('cliente.pago.carrito');
+        Route::post('/pago/carrito/{carrito}', [ClientePagoController::class, 'procesarCarrito'])->name('cliente.pago.carrito.procesar');
         Route::get('/compra-exitosa/{reserva}', [ClientePagoController::class, 'exito'])->name('cliente.compras.exito');
+        Route::get('/compra-exitosa/carrito/{carrito}', [ClientePagoController::class, 'exitoCarrito'])->name('cliente.compras.exito-carrito');
         Route::get('/ticket/{reserva}', [ClientePagoController::class, 'ticket'])->name('cliente.ticket');
     });
 

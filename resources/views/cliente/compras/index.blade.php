@@ -19,7 +19,29 @@
             <p class="small text-muted mb-3">
                 Al confirmar la compra se crea la orden; solo aparece en el historial de abajo después de completar el pago simulado.
             </p>
-            @foreach ($pendientes as $reserva)
+            @foreach ($pendientesPorCarrito as $idCarrito => $grupo)
+                @php
+                    $totalGrupo = $grupo->sum('total');
+                    $carritoModel = $grupo->first()->carrito;
+                @endphp
+                <div class="compra-item compra-item-pendiente compra-item-carrito-grupo">
+                    <div class="compra-item-main">
+                        <strong>Carrito · {{ $grupo->count() }} {{ $grupo->count() === 1 ? 'evento' : 'eventos' }}</strong>
+                        <ul class="list-unstyled small text-muted mb-2 mt-2">
+                            @foreach ($grupo as $reserva)
+                                <li>{{ $reserva->evento->titulo }} — ${{ number_format($reserva->total, 2) }}</li>
+                            @endforeach
+                        </ul>
+                        <p class="small text-muted mb-0">Total ${{ number_format($totalGrupo, 2) }} MXN</p>
+                    </div>
+                    <div class="compra-item-actions text-end">
+                        @if ($carritoModel)
+                            <a href="{{ route('cliente.pago.carrito', $carritoModel) }}" class="btn-gold btn-sm">Pagar carrito completo</a>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+            @foreach ($pendientesSueltas as $reserva)
                 <div class="compra-item compra-item-pendiente">
                     <div class="compra-item-main">
                         <strong>{{ $reserva->evento->titulo }}</strong>

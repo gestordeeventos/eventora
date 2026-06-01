@@ -8,8 +8,17 @@
                        class="{{ request()->routeIs('cliente.eventos.*', 'eventos.*', 'reservas.*') && ! request()->routeIs('cliente.perfil*') ? 'active' : '' }}">
                         Explorar eventos
                     </a>
+                    <a href="{{ route('cliente.carrito.index') }}"
+                       class="cliente-nav-carrito {{ request()->routeIs('cliente.carrito.*') ? 'active' : '' }}"
+                       title="Mi carrito">
+                        <span class="carrito-nav-icon" aria-hidden="true">🛒</span>
+                        <span class="carrito-nav-label">Carrito</span>
+                        @if (($carritoUnidades ?? 0) > 0)
+                            <span class="carrito-nav-badge">{{ $carritoUnidades > 99 ? '99+' : $carritoUnidades }}</span>
+                        @endif
+                    </a>
                     <a href="{{ route('cliente.compras.index') }}"
-                       class="{{ request()->routeIs('cliente.compras.*', 'cliente.pago.*', 'cliente.ticket') ? 'active' : '' }}">
+                       class="{{ request()->routeIs('cliente.compras.*', 'cliente.pago.*', 'cliente.ticket') && ! request()->routeIs('cliente.carrito.*') ? 'active' : '' }}">
                         Mis compras
                     </a>
                     <a href="{{ route('cliente.perfil') }}"

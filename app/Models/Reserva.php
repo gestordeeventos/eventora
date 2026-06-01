@@ -15,6 +15,7 @@ class Reserva extends Model
     protected $fillable = [
         'id_usuario',
         'id_evento',
+        'id_carrito',
         'id_paquete',
         'estado',
         'total',
@@ -48,6 +49,11 @@ class Reserva extends Model
     public function evento(): BelongsTo
     {
         return $this->belongsTo(Evento::class, 'id_evento');
+    }
+
+    public function carrito(): BelongsTo
+    {
+        return $this->belongsTo(Carrito::class, 'id_carrito', 'id_carrito');
     }
 
     public function paquete(): BelongsTo

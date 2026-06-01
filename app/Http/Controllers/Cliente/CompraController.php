@@ -21,10 +21,18 @@ class CompraController extends Controller
 
         $pendientes = $user->reservas()
             ->where('estado', 'pendiente')
-            ->with(['evento', 'reservaBoletos.boleto'])
+            ->with(['evento', 'reservaBoletos.boleto', 'carrito'])
             ->orderByDesc('created_at')
             ->get();
 
-        return view('cliente.compras.index', compact('compras', 'pendientes'));
+        $pendientesPorCarrito = $pendientes->whereNotNull('id_carrito')->groupBy('id_carrito');
+        $pendientesSueltas = $pendientes->whereNull('id_carrito');
+
+        return view('cliente.compras.index', compact(
+            'compras',
+            'pendientes',
+            'pendientesPorCarrito',
+            'pendientesSueltas'
+        ));
     }
 }

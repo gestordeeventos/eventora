@@ -34,7 +34,7 @@
 
 @auth
     @if (auth()->user()->isCliente() && $evento->estado === 'publicado' && $evento->boletos->isNotEmpty())
-        <a href="{{ route('reservas.create', $evento) }}" class="btn-gold">Reservar boletos</a>
+        <a href="{{ route('reservas.create', $evento) }}" class="btn-gold">Agregar al carrito</a>
     @endif
 @else
     <a href="{{ route('login') }}" class="btn-gold">Inicia sesión para reservar</a>

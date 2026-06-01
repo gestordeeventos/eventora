@@ -364,21 +364,37 @@ h1, h2, h3, .font-display {
 .evento-card-title { font-size: 1.2rem; color: var(--navy); margin: 0 0 10px; line-height: 1.3; }
 .evento-card-desc { font-size: 14px; color: var(--gray); line-height: 1.6; flex: 1; margin-bottom: 20px; }
 .evento-card-footer {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    flex-wrap: wrap; padding-top: 16px; border-top: 1px solid rgba(15, 31, 61, 0.08);
+    display: flex; flex-direction: column; align-items: stretch; gap: 12px;
+    padding-top: 16px; border-top: 1px solid rgba(15, 31, 61, 0.08);
 }
 .evento-precio { font-size: 15px; font-weight: 600; color: var(--navy2); }
 .evento-precio span { font-size: 12px; font-weight: 400; color: var(--gray); }
-.evento-card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.evento-card-actions {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; width: 100%;
+}
 .btn-evento-secondary {
-    padding: 8px 14px; background: var(--navy2); color: #fff; border-radius: 6px;
+    padding: 8px 12px; background: var(--navy2); color: #fff; border-radius: 6px;
     font-size: 12px; text-decoration: none; font-weight: 500;
 }
 .btn-evento-primary {
-    padding: 8px 14px; background: var(--gold); color: var(--navy); border-radius: 6px;
+    padding: 8px 12px; background: var(--gold); color: var(--navy); border-radius: 6px;
     font-size: 12px; text-decoration: none; font-weight: 600;
 }
-.btn-evento-primary:hover, .btn-evento-secondary:hover { opacity: 0.92; color: inherit; }
+.btn-evento-carrito {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 12px; background: #fff; color: var(--navy); border-radius: 6px;
+    font-size: 12px; text-decoration: none; font-weight: 600;
+    border: 1.5px solid var(--gold); box-shadow: 0 1px 4px rgba(15, 31, 61, 0.06);
+}
+.btn-evento-carrito-badge {
+    min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px;
+    background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+}
+.btn-evento-primary:hover,
+.btn-evento-secondary:hover,
+.btn-evento-carrito:hover { opacity: 0.92; color: inherit; }
+.btn-evento-carrito:hover { background: rgba(201, 168, 76, 0.15); }
 
 .evento-detalle-pro {
     background: var(--white); border-radius: 16px; padding: 40px;
@@ -412,6 +428,81 @@ h1, h2, h3, .font-display {
     font-weight: 600; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; font-size: 15px;
 }
 .back-link { color: var(--navy2); text-decoration: none; font-size: 14px; display: inline-block; margin-bottom: 20px; }
+
+/* Carrito */
+.cliente-nav-carrito {
+    display: inline-flex; align-items: center; gap: 6px; position: relative;
+    padding: 6px 10px; border-radius: 8px; text-decoration: none;
+    color: var(--navy2); font-size: 14px; font-weight: 500;
+}
+.cliente-nav-carrito:hover, .cliente-nav-carrito.active { color: var(--navy); background: rgba(201, 168, 76, 0.12); }
+.carrito-nav-icon { font-size: 1rem; line-height: 1; }
+.carrito-nav-badge {
+    min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+    background: var(--gold); color: var(--navy); font-size: 11px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+}
+.carrito-layout {
+    display: grid; grid-template-columns: 1fr minmax(280px, 340px); gap: 28px; align-items: start;
+}
+.carrito-evento-header {
+    display: flex; gap: 16px; align-items: flex-start; margin-bottom: 16px;
+    padding-bottom: 16px; border-bottom: 1px solid rgba(15, 31, 61, 0.08);
+}
+.carrito-evento-thumb {
+    width: 72px; height: 72px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+    border: 2px solid rgba(201, 168, 76, 0.35);
+}
+.carrito-evento-thumb-placeholder { background: linear-gradient(135deg, var(--navy), var(--navy2)); }
+.carrito-evento-tipo {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray);
+}
+.carrito-evento-title { color: var(--navy); margin: 0; }
+.carrito-item-row {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 14px 0; border-bottom: 1px solid rgba(15, 31, 61, 0.06);
+}
+.carrito-item-row:last-child { border-bottom: none; }
+.carrito-item-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.carrito-qty-form {
+    display: inline-flex; align-items: center; border: 1px solid rgba(15, 31, 61, 0.12);
+    border-radius: 8px; overflow: hidden; background: #faf9f7;
+}
+.carrito-qty-btn {
+    width: 36px; height: 36px; border: none; background: transparent; cursor: pointer;
+    font-size: 1.1rem; color: var(--navy); font-family: inherit;
+}
+.carrito-qty-btn:hover { background: rgba(201, 168, 76, 0.2); }
+.carrito-qty-input {
+    width: 44px; border: none; border-left: 1px solid rgba(15, 31, 61, 0.08);
+    border-right: 1px solid rgba(15, 31, 61, 0.08); text-align: center; padding: 8px 4px;
+    font-size: 14px; background: #fff; font-family: inherit;
+}
+.carrito-item-subtotal { font-weight: 600; color: var(--navy); min-width: 72px; text-align: right; }
+.carrito-remove-btn {
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(220, 38, 38, 0.25);
+    background: #fff; color: var(--danger); cursor: pointer; font-size: 1.25rem; line-height: 1;
+}
+.carrito-remove-btn:hover { background: #fef2f2; }
+.carrito-resumen-card { position: sticky; top: 24px; }
+.carrito-resumen-hint { line-height: 1.5; }
+.carrito-empty-state { padding: 56px 32px !important; }
+.carrito-empty-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.85; }
+.carrito-pago-evento {
+    padding-bottom: 12px; margin-bottom: 12px;
+    border-bottom: 1px solid rgba(15, 31, 61, 0.08);
+}
+.carrito-pago-evento:last-of-type { border-bottom: none; margin-bottom: 0; }
+.compra-item-carrito-grupo { background: rgba(201, 168, 76, 0.06); border-radius: 8px; padding: 12px !important; margin-bottom: 12px; }
+.visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
+}
+@media (max-width: 900px) {
+    .carrito-layout { grid-template-columns: 1fr; }
+    .carrito-resumen-card { position: static; }
+    .carrito-nav-label { display: none; }
+}
 
 .auth-standalone .cliente-nav { margin-bottom: 0; }
 .auth-standalone-wrap {

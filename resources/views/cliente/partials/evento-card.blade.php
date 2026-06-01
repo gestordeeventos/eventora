@@ -30,10 +30,20 @@
         <div class="evento-card-actions">
             <a href="{{ route('eventos.show', $evento) }}" class="btn-evento-secondary">Ver detalles</a>
             @auth
-                @if (auth()->user()->isCliente() && $evento->boletos->isNotEmpty())
-                    <a href="{{ route('reservas.create', $evento) }}" class="btn-evento-primary">Comprar</a>
+                @if (auth()->user()->isCliente())
+                    <a href="{{ route('cliente.carrito.index') }}" class="btn-evento-carrito">
+                        <span aria-hidden="true">🛒</span>
+                        Mi Carrito
+                        @if (($carritoUnidades ?? 0) > 0)
+                            <span class="btn-evento-carrito-badge">{{ $carritoUnidades > 99 ? '99+' : $carritoUnidades }}</span>
+                        @endif
+                    </a>
+                    @if ($evento->boletos->isNotEmpty())
+                        <a href="{{ route('reservas.create', $evento) }}" class="btn-evento-primary">Comprar</a>
+                    @endif
                 @endif
             @else
+                <a href="{{ route('login') }}" class="btn-evento-carrito">Mi Carrito</a>
                 <a href="{{ route('login') }}" class="btn-evento-primary">Comprar</a>
             @endauth
         </div>
